@@ -8,6 +8,8 @@
 - [[#glavni-ekran][Glavni Ekran]]
 - [[#ekran-za-menadzment-onlajn-sinhronizacije][Ekran za menadzment onlajn sinhronizacije]]
 - [[#dialog-za-dodavanje-linka-za-onlajn-sinhronizaciju][Dialog za dodavanje linka za server za onlajn sinhronizaciju]]
+- [[#informacioni-ekran][Informacioni Ekran]]
+- [[#navigacioni-meni][Navigacioni meni]]
 
 * O TextPad-u
 
