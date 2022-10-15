@@ -1,0 +1,41 @@
+#+TITLE: TextPad
+#+AUTHOR: Milan Radosavac
+#+EMAIL: radosavacmilan03@gmail.com
+#+DESCRIPTION: Opis aplikacije TextPad za mtel app takmicenje
+
+:toc:
+- [[#o-textpad-u][O TextPad-u]]
+- [[#glavni-ekran][Glavni Ekran]]
+- [[#ekran-za-menadzment-onlajn-sinhronizacije][Ekran za menadzment onlajn sinhronizacije]]
+- [[#dialog-za-dodavanje-linka-za-onlajn-sinhronizaciju][Dialog za dodavanje linka za server za onlajn sinhronizaciju]]
+
+* O TextPad-u
+
+TextPad je jednostavan obradjivac teksta napisan za Android™ platformu u programskom jeziku Kotlin, koristeci jetpack compose i material design biblioteku za izradu korisnickih interfejsova,
+MVVM i principe "Ciste Arhitekture" definisane od strane takozvanog "Ujaka Bob-a"(pravo ime Robert Cecil Martin), Kao i Koin za injekciju objekata od kojih zavise odredjene klase, objekti, metode
+i slicno, junit4 za automatizovano testiranje, ktor-client za potrebe onlajn sinhronizacije i Shared Preferences za "kesiranje" potrebnih podataka. Instrukcije za uspostavljanje prethodno navedene
+onlajn sinhronizacije ce se moci naci u aplikaciji.
+
+* Glavni Ekran
+
+Glavni ekran od vrha pa na nize po redu ima AppBar, sa dugmetom za navigacioni meni, pored njega ime aplikacije, kao i dugme za undo, redo, kreiranje novog file-a i brisanje trenutno otvorenog file-a,
+ispod toga postoji prostor za unos teksta, koji posjeduje mogucnost da se iz njega kopira, isjece ili u njega nalijepi tekst ili dio istog, na cioj donjoj strani "lebde" tri dugmeta za otvaranje file-ova,
+zatvaranje bez cuvanja, i cuvanje file-a.
+
+* Ekran za menadzment onlajn sinhronizacije
+
+Ovaj ekran se sastoji od vrha na nize AppBar kao i prethodni, samo sto u njemu ima samo dugme za navigacioni meni, i ime aplikacije, nakon koga ako je uspostavljena onlajn sinhronizacija postoji lista sa imenima
+tekstualnih file-ova, u slucaju da nisu, jedan dodir na ime tog file-a ce uciniti da bude, evidentno indikatorom koji ce se pojaviti pored imena file-a nakon tog poteza. Ako onlajn sinhronizacija
+nije uspostavljena, umjesto prethodno opisane liste, na njenom mjestu ce biti instrukcije kako se ona moze uspostaviti.
+
+* Dialog za dodavanje linka za server za onlajn sinhronizaciju
+
+Obicni dialog sa prostorom za unos linka, i dugmetom za potvdu tog poteza.
+
+* Informacioni ekran
+
+Kao i prethodni ekran, ima AppBar, ovaj put identican prethodniku, ispod kojeg su informacije o meni i ovoj aplikaciji, zasto je kreirana i slicno, kao i nacin kontaktiranja mene u slucaju potrebe izvrsenja takvog poteza.
+
+* Navigacioni meni
+
+Jednostavna lista postojecih ekrana koja omogucava prelazenje izmedju njih, u vidu menija.
