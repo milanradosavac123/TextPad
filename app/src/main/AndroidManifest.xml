@@ -4,13 +4,13 @@
     package="com.milanradosavac.textpad">
 
     <application
-
+    android:name=".TextPad"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/ime_aplikacije"
         android:theme="@style/Teme.TextPad"
         tools:targetApi="31">
         <activity
-            android:name=".GlavnaAktivnost"
+            android:name=".funkcija_obrade_teksta.prezentacija.GlavnaAktivnost"
             android:exported="true"
             android:theme="@style/Teme.TextPad">
             <intent-filter>
