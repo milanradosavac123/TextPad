@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.funkcija_obrade_teksta.prezentacija.generalne_korisne_klase_i_objekti
+package com.milanradosavac.textpad.feature_text_editing.presentation.util
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,19 +19,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.milanradosavac.textpad.funkcija_obrade_teksta.prezentacija.ekrani.ekran_za_menadzment_onlajn_sinhronizacije.EkranZaMenadzmentOnlajnSinhronizacije
-import com.milanradosavac.textpad.funkcija_obrade_teksta.prezentacija.ekrani.glavni_ekran.GlavniEkran
-import com.milanradosavac.textpad.funkcija_obrade_teksta.prezentacija.ekrani.informacioni_ekran.InformacioniEkran
+import com.milanradosavac.textpad.feature_text_editing.presentation.screens.online_sync_management_screen.OnlineSyncManagementScreen
+import com.milanradosavac.textpad.feature_text_editing.presentation.screens.main_screen.MainScreen
+import com.milanradosavac.textpad.feature_text_editing.presentation.screens.about_screen.AboutScreen
 import kotlinx.coroutines.launch
 
 @Composable
-fun Navigacija(
-    navigacioniKontroler: NavHostController,
-    stanjeMenija: DrawerState
+fun Navigation(
+    navController: NavHostController,
+    drawerState: DrawerState
 ) {
 
-    val obim = rememberCoroutineScope()
-    val oblikMenija = MaterialTheme.shapes.medium.copy(
+    val scope = rememberCoroutineScope()
+    val drawerShape = MaterialTheme.shapes.medium.copy(
         topStart = CornerSize(0.dp),
         bottomStart = CornerSize(0.dp)
     )
@@ -39,9 +39,9 @@ fun Navigacija(
     ModalDrawer(
         drawerContent = {
             arrayOf(
-                Ekran.GlavniEkran,
-                Ekran.EkranZaMenadzmentOnlajnSinhronizacije,
-                Ekran.InformacioniEkran
+                Screen.MainScreen,
+                Screen.OnlineSyncManagementScreen,
+                Screen.AboutScreen
             ).forEachIndexed { i, it ->
 
                 Row(
@@ -51,45 +51,45 @@ fun Navigacija(
                         .clip(MaterialTheme.shapes.medium)
                         .background(MaterialTheme.colors.primary)
                         .clickable {
-                            if (navigacioniKontroler.currentDestination?.route != it()) {
-                                navigacioniKontroler.apply {
+                            if (navController.currentDestination?.route != it()) {
+                                navController.apply {
                                     popBackStack()
                                     navigate(it())
 
-                                    obim.launch {
-                                        stanjeMenija.close()
+                                    scope.launch {
+                                        drawerState.close()
                                     }
 
                                     return@clickable
                                 }
                             }
 
-                            obim.launch {
-                                stanjeMenija.close()
+                            scope.launch {
+                                drawerState.close()
                             }
                         }
                 ) {
-                    Text(text = "- ${it.ime}", color = MaterialTheme.colors.onPrimary, modifier = Modifier
+                    Text(text = "- ${it.name}", color = MaterialTheme.colors.onPrimary, modifier = Modifier
                         .padding(start = 5.dp)
                     )
                 }
             }
         },
-        drawerShape = oblikMenija,
+        drawerShape = drawerShape,
         scrimColor = Color.Transparent,
-        drawerState = stanjeMenija
+        drawerState = drawerState
     ) {
 
         NavHost(
-            navController = navigacioniKontroler,
-            startDestination = Ekran.GlavniEkran()
+            navController = navController,
+            startDestination = Screen.MainScreen()
         ) {
 
-            composable(Ekran.GlavniEkran()) { GlavniEkran() }
+            composable(Screen.MainScreen()) { MainScreen() }
 
-            composable(Ekran.EkranZaMenadzmentOnlajnSinhronizacije()) { EkranZaMenadzmentOnlajnSinhronizacije() }
+            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen() }
 
-            composable(Ekran.InformacioniEkran()) { InformacioniEkran() }
+            composable(Screen.AboutScreen()) { AboutScreen() }
 
         }
 

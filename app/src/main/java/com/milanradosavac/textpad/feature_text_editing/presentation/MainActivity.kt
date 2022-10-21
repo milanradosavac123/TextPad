@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.funkcija_obrade_teksta.prezentacija
+package com.milanradosavac.textpad.feature_text_editing.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,20 +10,20 @@ import androidx.compose.material.Surface
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.milanradosavac.textpad.funkcija_obrade_teksta.prezentacija.generalne_korisne_klase_i_objekti.Navigacija
-import com.milanradosavac.textpad.ki.tema.TextPadTema
+import com.milanradosavac.textpad.feature_text_editing.presentation.util.Navigation
+import com.milanradosavac.textpad.ui.theme.TextPadTheme
 
-class GlavnaAktivnost : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            TextPadTema {
+            TextPadTheme {
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Navigacija(navigacioniKontroler = rememberNavController(), stanjeMenija = rememberDrawerState(initialValue = DrawerValue.Closed))
+                    Navigation(navController = rememberNavController(), drawerState = rememberDrawerState(initialValue = DrawerValue.Closed))
                 }
             }
         }

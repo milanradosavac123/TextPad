@@ -1,7 +1,7 @@
 package com.milanradosavac.textpad
 
 import android.app.Application
-import com.milanradosavac.textpad.injekcija_zavisnih_objekata.aplikacioniModul
+import com.milanradosavac.textpad.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -20,7 +20,7 @@ class TextPad: Application() {
 
             modules(
                 listOf(
-                    aplikacioniModul
+                    appModule
                 )
             )
 

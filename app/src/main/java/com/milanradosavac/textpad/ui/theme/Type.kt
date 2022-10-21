@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.ki.tema
+package com.milanradosavac.textpad.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
@@ -8,15 +8,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.milanradosavac.textpad.R
 
-val orbitron = FontFamily(
+val Orbitron = FontFamily(
     Font(
         R.font.orbitron
     )
 )
 
-val Tipografija = Typography(
+val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = orbitron,
+        fontFamily = Orbitron,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
     )

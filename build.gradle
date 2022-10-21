@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        compose_verzija = '1.3.0-rc01'
-        coroutines_verzija = '1.6.4'
-        koin_verzija = '3.0.1'
+        compose_version = '1.3.0-rc01'
+        coroutines_version = '1.6.4'
+        koin_version = '3.0.1'
     }
 }
 plugins {
