@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="crna">#FF000000</color>
-    <color name="tamnoSiva">#30343F</color>
+    <color name="black">#FF000000</color>
+    <color name="dark_gray">#30343F</color>
 </resources>

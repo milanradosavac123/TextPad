@@ -6,13 +6,13 @@
     <application
         android:name=".TextPad"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/ime_aplikacije"
-        android:theme="@style/Teme.TextPad"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.TextPad"
         tools:targetApi="33">
         <activity
             android:name=".feature_text_editing.presentation.MainActivity"
             android:exported="true"
-            android:theme="@style/Teme.TextPad">
+            android:theme="@style/Theme.TextPad">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

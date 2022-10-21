@@ -85,11 +85,11 @@ fun Navigation(
             startDestination = Screen.MainScreen()
         ) {
 
-            composable(Screen.MainScreen()) { MainScreen() }
+            composable(Screen.MainScreen()) { MainScreen(scope, drawerState) }
 
-            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen() }
+            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen(scope, drawerState) }
 
-            composable(Screen.AboutScreen()) { AboutScreen() }
+            composable(Screen.AboutScreen()) { AboutScreen(scope, drawerState) }
 
         }
 
