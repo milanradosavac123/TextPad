@@ -19,5 +19,10 @@ val Typography = Typography(
         fontFamily = Orbitron,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = Orbitron,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
     )
 )
