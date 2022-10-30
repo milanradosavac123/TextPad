@@ -5,4 +5,6 @@ object Constants {
     const val DEBUG_TAG = "TextPad"
 
     const val EMAIL_TAG = "mail"
+
+    const val URL_TAG = "url"
 }

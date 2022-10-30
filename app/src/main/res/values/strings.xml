@@ -15,4 +15,13 @@
     </string>
     <string name="email">radosavacmilan03@gmail.com</string>
     <string name="copyright">\n\n© 2022 Milan Radosavac</string>
+    <string name="server_adding_instructions_part_1">Err..Izgleda da ne posjedujete server za onlajn sinhronizaciju, da bi ga uspostavili, idite na web stranicu
+    </string>
+    <string name="website_url" >textpad.link</string>
+    <string name="server_adding_instructions_part_2" >
+        da bi preuzeli server softver za zeljeni racunar. Tamo cete naci i kako da nastavite zavisno od toga da li server softver instalirate na Linux-os,
+        Windows ili Mac racunar.
+    </string>
+    <string name="add_server">dodaj server</string>
+    <string name="enter_url">Unesite link servera</string>
 </resources>

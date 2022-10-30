@@ -1,9 +1,6 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation.screens.about_screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.DrawerState
 import androidx.compose.material.MaterialTheme
@@ -35,7 +32,7 @@ fun AboutScreen(
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(15.dp)
+            modifier = Modifier.padding(15.dp).fillMaxSize()
         ) {
 
             val annotatedLinkString: AnnotatedString = buildAnnotatedString {
