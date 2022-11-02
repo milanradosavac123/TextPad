@@ -2,16 +2,16 @@
     <string name="app_name">TextPad</string>
     <string name="open">Otvori</string>
     <string name="close">Zatvori</string>
-    <string name="save">Sacuvaj</string>
+    <string name="save">Sačuvaj</string>
     <string name="app_info">
-        Pozdrav,\n\n\tMoje ime je Milan Radosavac, bavim se izradom android aplikacija vec skoro dvije godine (u vrijeme pisanja ovog teksta).
-        Odlucio sam da se takmicim na takmicenju u izradi Android aplikacija lokalne kompanije Mtel, nakon sto sam o postojanju istog bio informisan
-        od strane prof. Zlatka Ivanovica.\n\n\tOva aplikacija sluzi za obradu teksta, na sta asocira i ime iste, medjutim ona nije kao sve ostale aplikacije
-        za te svrhe, u ovoj aplikaciji postoji i mogucnost onlajn sinhronizacije.\n\n\tTo znaci da u slucaju posjedovanja vise Android
-        telefona, mozete upravo preko ove aplikacije da imate pristup svim svojim tekstualnim fajlovima na oba telefona, naravno nakon
-        sto uspostavite server za onlajn sinhronizaciju po instrukcijama na odgovarajucem ekranu, to takodje znaci da imate sve svoje tekstualne
-        fajlove na sigurnom mjestu u slucaju da izgubite pristup vasem mobilnom uredjaju, ili vam isti bude ostecen bez mogucnosti
-        popravke. Ako primjetite neku gresku ili drugu neispravnost koja ometa koristenje aplikacije mozete me kontaktirati putem e-maila,
+        Pozdrav,\n\n\tMoje ime je Milan Radosavac, bavim se izradom Android aplikacija već skoro dvije godine (u vrijeme pisanja ovog teksta).
+        Odlučio sam da se takmičim na takmičenju u izradi Android aplikacija lokalne kompanije Mtel, nakon što sam o postojanju istog bio informisan
+        od strane prof. Zlatka Ivanovića.\n\n\tOva aplikacija služi za obradu teksta, na šta asocira i ime iste, međutim ona nije kao sve ostale aplikacije
+        za te svrhe, u ovoj aplikaciji postoji i mogućnost onlajn sinhronizacije.\n\n\tTo znači da u slučaju posjedovanja više Android
+        telefona, možete upravo preko ove aplikacije da imate pristup svim svojim tekstualnim fajlovima na oba telefona, naravno nakon
+        što uspostavite server za onlajn sinhronizaciju po instrukcijama na odgovarajućem ekranu, to takođe znači da imate sve svoje tekstualne
+        fajlove na sigurnom mjestu u slučaju da izgubite pristup vašem mobilnom uredjaju, ili vam isti bude ostećen bez mogućnosti
+        popravke. Ako primjetite neku grešku ili drugu neispravnost koja ometa korištenje aplikacije možete me kontaktirati putem e-maila,
     </string>
     <string name="email">radosavacmilan03@gmail.com</string>
     <string name="copyright">\n\n© 2022 Milan Radosavac</string>
@@ -19,7 +19,7 @@
     </string>
     <string name="website_url" >textpad.link</string>
     <string name="server_adding_instructions_part_2" >
-        da bi preuzeli server softver za zeljeni racunar. Tamo cete naci i kako da nastavite zavisno od toga da li server softver instalirate na Linux-os,
+        da bi preuzeli server softver za željeni racunar. Tamo ćete naći i kako da nastavite zavisno od toga da li server softver instalirate na Linux-os,
         Windows ili Mac racunar.
     </string>
     <string name="add_server">dodaj server</string>
