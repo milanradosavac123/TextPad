@@ -20,7 +20,7 @@
     <string name="website_url" >textpad.link</string>
     <string name="server_adding_instructions_part_2" >
         da bi preuzeli server softver za željeni racunar. Tamo ćete naći i kako da nastavite zavisno od toga da li server softver instalirate na Linux-os,
-        Windows ili Mac racunar.
+        Windows ili Mac računar.
     </string>
     <string name="add_server">dodaj server</string>
     <string name="enter_url">Unesite link servera</string>
