@@ -7,11 +7,11 @@
         Pozdrav,\n\n\tMoje ime je Milan Radosavac, bavim se izradom Android aplikacija već skoro dvije godine (u vrijeme pisanja ovog teksta).
         Odlučio sam da se takmičim na takmičenju u izradi Android aplikacija lokalne kompanije Mtel, nakon što sam o postojanju istog bio informisan
         od strane prof. Zlatka Ivanovića.\n\n\tOva aplikacija služi za obradu teksta, na šta asocira i ime iste, međutim ona nije kao sve ostale aplikacije
-        za te svrhe, u ovoj aplikaciji postoji i mogućnost onlajn sinhronizacije.\n\n\tTo znači da u slučaju posjedovanja više Android
-        telefona, možete upravo preko ove aplikacije da imate pristup svim svojim tekstualnim fajlovima na oba telefona, naravno nakon
-        što uspostavite server za onlajn sinhronizaciju po instrukcijama na odgovarajućem ekranu, to takođe znači da imate sve svoje tekstualne
+        za te svrhe. U ovoj aplikaciji postoji i mogućnost onlajn sinhronizacije.\n\n\tTo znači da u slučaju posjedovanja više Android
+        telefona, možete upravo preko ove aplikacije da imate pristup svim svojim tekstualnim fajlovima na svim telefonima. Naravno nakon
+        što uspostavite server za onlajn sinhronizaciju po instrukcijama na odgovarajućem ekranu. To takođe znači da imate sve svoje tekstualne
         fajlove na sigurnom mjestu u slučaju da izgubite pristup vašem mobilnom uređaju, ili vam isti bude oštećen bez mogućnosti
-        popravke. Ako primjetite neku grešku ili drugu neispravnost koja ometa korištenje aplikacije možete me kontaktirati putem e-maila,
+        popravke. Ako primjetite neku grešku ili drugu neispravnost koja ometa korišćenje aplikacije možete me kontaktirati putem e-maila,
     </string>
     <string name="email">radosavacmilan03@gmail.com</string>
     <string name="copyright">\n\n© 2022 Milan Radosavac</string>
