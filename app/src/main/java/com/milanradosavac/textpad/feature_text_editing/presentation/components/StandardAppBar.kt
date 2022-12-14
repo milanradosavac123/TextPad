@@ -10,6 +10,14 @@ import com.milanradosavac.textpad.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * The standard app bar that is shown on every screen
+ * @param modifier The modifier
+ * @param scope The coroutine scope
+ * @param drawerState The drawer state
+ * @param options Icons of different actions on a particular screen
+ * @author Milan Radosavac
+ */
 @Composable
 fun StandardAppBar(
     modifier: Modifier,

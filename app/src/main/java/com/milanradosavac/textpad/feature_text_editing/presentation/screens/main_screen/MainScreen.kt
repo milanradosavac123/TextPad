@@ -18,6 +18,12 @@ import com.milanradosavac.textpad.R
 import com.milanradosavac.textpad.feature_text_editing.presentation.components.StandardAppBar
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * Screen that contains the main functionality of this app
+ * @param scope The coroutine scope for this screen
+ * @param drawerState The drawer state for the navigation drawer
+ * @author Milan Radosavac
+ */
 @Composable
 fun MainScreen(
     scope: CoroutineScope,

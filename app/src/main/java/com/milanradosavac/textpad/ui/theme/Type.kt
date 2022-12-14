@@ -8,12 +8,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.milanradosavac.textpad.R
 
+/**
+ * The font for the project
+ * @author Matt McInerney
+ */
 val Orbitron = FontFamily(
     Font(
         R.font.orbitron
     )
 )
 
+/**
+ * The project's typography
+ * @author Milan Radosavac
+ */
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = Orbitron,

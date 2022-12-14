@@ -17,7 +17,7 @@
     <string name="copyright">\n\n© 2022 Milan Radosavac</string>
     <string name="server_adding_instructions_part_1">Err..Izgleda da ne posjedujete server za onlajn sinhronizaciju, da bi ga uspostavili, idite na web stranicu
     </string>
-    <string name="website_url" >textpad.link</string>
+    <string name="website_url" >textpad.onrender.com</string>
     <string name="server_adding_instructions_part_2" >
         da bi preuzeli server softver za željeni racunar. Tamo ćete naći i kako da nastavite zavisno od toga da li server softver instalirate na Linux-os,
         Windows ili Mac računar.

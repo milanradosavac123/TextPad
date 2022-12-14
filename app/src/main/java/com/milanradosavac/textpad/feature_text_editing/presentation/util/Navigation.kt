@@ -24,6 +24,12 @@ import com.milanradosavac.textpad.feature_text_editing.presentation.screens.main
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.about_screen.AboutScreen
 import kotlinx.coroutines.launch
 
+/**
+ * The navigation drawer
+ * @param navController The navigation controller
+ * @param drawerState The navigation drawer state
+ * @author Milan Radosavac
+ */
 @Composable
 fun Navigation(
     navController: NavHostController,

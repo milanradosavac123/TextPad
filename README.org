@@ -15,7 +15,7 @@
 
 TextPad je jednostavan obradjivac teksta napisan za Android™ platformu u programskom jeziku Kotlin, koristeci jetpack compose i material design biblioteku za izradu korisnickih interfejsova,
 MVVM i principe "Ciste Arhitekture" definisane od strane takozvanog "Ujaka Bob-a"(pravo ime Robert Cecil Martin), Kao i Koin za injekciju objekata od kojih zavise odredjene klase, objekti, metode
-i slicno, junit4 za automatizovano testiranje, ktor-client za potrebe onlajn sinhronizacije i Shared Preferences za "kesiranje" potrebnih podataka. Instrukcije za uspostavljanje prethodno navedene
+i slicno, junit4 za automatizovano testiranje, ktor-client za potrebe onlajn sinhronizacije i Room za "kesiranje" potrebnih podataka. Instrukcije za uspostavljanje prethodno navedene
 onlajn sinhronizacije ce se moci naci u aplikaciji.
 
 * Glavni Ekran

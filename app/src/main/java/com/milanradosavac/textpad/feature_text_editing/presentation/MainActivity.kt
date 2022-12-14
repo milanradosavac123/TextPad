@@ -13,6 +13,10 @@ import androidx.navigation.compose.rememberNavController
 import com.milanradosavac.textpad.feature_text_editing.presentation.util.Navigation
 import com.milanradosavac.textpad.ui.theme.TextPadTheme
 
+/**
+ * Main Activity class
+ * @author Milan Radosavac
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

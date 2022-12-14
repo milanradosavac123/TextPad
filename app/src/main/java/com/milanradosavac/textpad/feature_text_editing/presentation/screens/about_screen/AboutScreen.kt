@@ -22,6 +22,12 @@ import com.milanradosavac.textpad.feature_text_editing.presentation.components.S
 import com.milanradosavac.textpad.feature_text_editing.presentation.util.Constants.EMAIL_TAG
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * Screen that contains info about me, this app, and the purpose of it's creation
+ * @param scope The coroutine scope for this screen
+ * @param drawerState The drawer state for the navigation drawer
+ * @author Milan Radosavac
+ */
 @Composable
 fun AboutScreen(
     scope: CoroutineScope,

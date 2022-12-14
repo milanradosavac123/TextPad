@@ -27,6 +27,12 @@ import com.milanradosavac.textpad.feature_text_editing.presentation.dialogs.serv
 import com.milanradosavac.textpad.feature_text_editing.presentation.util.Constants.URL_TAG
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * The screen that contains the online sync management functionality
+ * @param scope The coroutine scope for this screen
+ * @param drawerState The drawer state for the navigation drawer
+ * @author Milan Radosavac
+ */
 @Composable
 fun OnlineSyncManagementScreen(
     scope: CoroutineScope,

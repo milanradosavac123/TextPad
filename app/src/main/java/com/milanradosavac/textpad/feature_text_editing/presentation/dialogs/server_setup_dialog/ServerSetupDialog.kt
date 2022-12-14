@@ -1,7 +1,6 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation.dialogs.server_setup_dialog
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -15,6 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.milanradosavac.textpad.R
 
+/**
+ * The dialog for setting up the server
+ * @param showDialogState The state that determines if the dialog should be shown or not
+ * @param serverUrlState The state that holds the server url string
+ * @param onShowDialogChanged The callback that handles showDialogState changes
+ * @param onServerUrlTextChanged The callback that handles serverUrlState changes
+ * @author Milan Radosavac
+ */
 @Composable
 fun OnlineSyncServerSetupDialog(
     showDialogState: State<Boolean>,
