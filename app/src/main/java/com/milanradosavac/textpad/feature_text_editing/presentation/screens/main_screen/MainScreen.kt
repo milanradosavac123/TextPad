@@ -1,5 +1,8 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation.screens.main_screen
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
@@ -8,26 +11,32 @@ import androidx.compose.material.icons.outlined.Create
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Redo
 import androidx.compose.material.icons.outlined.Undo
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.milanradosavac.textpad.R
 import com.milanradosavac.textpad.feature_text_editing.presentation.components.StandardAppBar
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Screen that contains the main functionality of this app
  * @param scope The coroutine scope for this screen
  * @param drawerState The drawer state for the navigation drawer
+ * @param viewModel The viewModel for this screen
  * @author Milan Radosavac
  */
 @Composable
 fun MainScreen(
     scope: CoroutineScope,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    viewModel: MainViewModel
 ) {
     Column {
         StandardAppBar(
@@ -53,55 +62,10 @@ fun MainScreen(
             }
         }
         Box {
-
-            var testState by remember {
-                mutableStateOf(
-                    "Lorem ipsum dolor sit amet, " +
-                            "consectetur adipiscing elit. Proin enim, " +
-                            "mattis eget massa quam mattis morbi. " +
-                            "Eget donec vestibulum, varius urna. " +
-                            "Non at parturient etiam egestas tincidunt. " +
-                            "Purus metus, et ut egestas. " +
-                            "Non ullamcorper sem risus scelerisque curabitur. " +
-                            "Sed risus faucibus gravida vel, " +
-                            "urna consequat lectus nec fringilla. " +
-                            "Lacinia fermentum eget faucibus at lorem. " +
-                            "Mauris tellus sit amet," +
-                            "pellentesque. Consectetur et, " +
-                            "at neque faucibus ipsum elit mi dignissim." +
-                            "Pellentesque pellentesque eu massa aliquam. " +
-                            "At dui sit id amet ornare. " +
-                            "Sit quisque odio a id id eu et, " +
-                            "id. Mi, massa at eu, pretium. " +
-                            "Et pellentesque est nibh ac aliquam. " +
-                            "Nunc, venenatis elit, in sed sed amet, " +
-                            "sed feugiat. Et amet consequat ut adipiscing. " +
-                            "Lorem ipsum dolor sit amet, " +
-                            "consectetur adipiscing elit. Proin enim, " +
-                            "mattis eget massa quam mattis morbi. " +
-                            "Eget donec vestibulum, varius urna. " +
-                            "Non at parturient etiam egestas tincidunt. " +
-                            "Purus metus, et ut egestas. " +
-                            "Non ullamcorper sem risus scelerisque curabitur. " +
-                            "Sed risus faucibus gravida vel, " +
-                            "urna consequat lectus nec fringilla. " +
-                            "Lacinia fermentum eget faucibus at lorem. " +
-                            "Mauris tellus sit amet," +
-                            "pellentesque. Consectetur et, " +
-                            "at neque faucibus ipsum elit mi dignissim." +
-                            "Pellentesque pellentesque eu massa aliquam. " +
-                            "At dui sit id amet ornare. " +
-                            "Sit quisque odio a id id eu et, " +
-                            "id. Mi, massa at eu, pretium. " +
-                            "Et pellentesque est nibh ac aliquam. " +
-                            "Nunc, venenatis elit, in sed sed amet, " +
-                            "sed feugiat. Et amet consequat ut adipiscing."
-                )
-            }
             TextField(
-                value = testState,
+                value = viewModel.textFieldState,
                 onValueChange = {
-                    testState = it
+                    viewModel.onTextFieldStateChanged(it)
                 },
                 singleLine = false,
                 colors = TextFieldDefaults.textFieldColors(
@@ -123,19 +87,68 @@ fun MainScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(onClick = { }) {
+                val context = LocalContext.current
+                val openFileLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) { it ->
+//                    val file = it?.let { it1 -> context.contentResolver.openInputStream(it1) }
+                    viewModel.onUriStateChanged(it)
+                    val file = context.contentResolver.openInputStream(viewModel.uriState?: return@rememberLauncherForActivityResult)
+                    val text = file?.readBytes()?.decodeToString() ?: "error"
+
+                    scope.launch {
+                        withContext(Dispatchers.IO) {
+                            file?.close()
+                        }
+                    }
+                    viewModel.onTextFieldStateChanged(text)
+                }
+                Button(onClick = {
+                    openFileLauncher.launch(arrayOf("text/plain"))
+                }) {
                     Text(
                         text = stringResource(id = R.string.open),
                         style = MaterialTheme.typography.body1
                     )
                 }
-                Button(onClick = { }) {
+                Button(onClick = {
+                    if(viewModel.textChangeSinceLastSaveCount > 0) {
+                        Toast.makeText(context, context.getText(R.string.file_changed_warning), Toast.LENGTH_LONG).show()
+                        return@Button
+                    }
+
+                    viewModel.onUriStateChanged()
+                    viewModel.onTextFieldStateChanged("")
+                }) {
                     Text(
                         text = stringResource(id = R.string.close),
                         style = MaterialTheme.typography.body1
                     )
                 }
-                Button(onClick = { }) {
+                val saveFileLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.CreateDocument("text/plain")) {
+                    val file = it?.let { it1 -> context.contentResolver.openOutputStream(it1) }
+                    val text = viewModel.textFieldState
+                    scope.launch {
+                        withContext(Dispatchers.IO) {
+                            file?.write(text.encodeToByteArray())
+                            file?.close()
+                        }
+                    }
+                }
+                Button(onClick = {
+                    viewModel.resetTextChangeSinceLastSaveCount()
+                    viewModel.uriState?.let {
+                        val file = context.contentResolver.openOutputStream(it)
+                        val text = viewModel.textFieldState
+                        scope.launch {
+                            withContext(Dispatchers.IO) {
+                                file?.write(text.encodeToByteArray())
+                                file?.close()
+                            }
+                        }
+                        return@Button
+                    }
+
+                    saveFileLauncher.launch(context.getString(R.string.default_file_name))
+                }) {
                     Text(
                         text = stringResource(id = R.string.save),
                         style = MaterialTheme.typography.body1

@@ -24,4 +24,6 @@
     </string>
     <string name="add_server">dodaj server</string>
     <string name="enter_url">Unesite link servera</string>
+    <string name="default_file_name">dokument.txt</string>
+    <string name="file_changed_warning">Fajl je promjenut nakon posljednjeg cuvanja! Sacuvajte fajl prije zatvaranja istog.</string>
 </resources>

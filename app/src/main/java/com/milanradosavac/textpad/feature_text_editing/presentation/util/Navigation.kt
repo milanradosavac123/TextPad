@@ -22,7 +22,9 @@ import androidx.navigation.compose.composable
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.online_sync_management_screen.OnlineSyncManagementScreen
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.main_screen.MainScreen
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.about_screen.AboutScreen
+import com.milanradosavac.textpad.feature_text_editing.presentation.screens.main_screen.MainViewModel
 import kotlinx.coroutines.launch
+import org.koin.java.KoinJavaComponent.get
 
 /**
  * The navigation drawer
@@ -48,7 +50,7 @@ fun Navigation(
                 Screen.MainScreen,
                 Screen.OnlineSyncManagementScreen,
                 Screen.AboutScreen
-            ).forEachIndexed { i, it ->
+            ).forEachIndexed { i: Int, it ->
 
                 Row(
                     Modifier
@@ -91,7 +93,7 @@ fun Navigation(
             startDestination = Screen.MainScreen()
         ) {
 
-            composable(Screen.MainScreen()) { MainScreen(scope, drawerState) }
+            composable(Screen.MainScreen()) { MainScreen(scope, drawerState, get(MainViewModel::class.java)) }
 
             composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen(scope, drawerState) }
 
