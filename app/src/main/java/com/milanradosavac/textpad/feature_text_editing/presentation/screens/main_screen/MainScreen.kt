@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Create
-import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Redo
 import androidx.compose.material.icons.outlined.Undo
 import androidx.compose.runtime.Composable
@@ -38,6 +37,7 @@ fun MainScreen(
     drawerState: DrawerState,
     viewModel: MainViewModel
 ) {
+    val context = LocalContext.current
     Column {
         StandardAppBar(
             modifier = Modifier.fillMaxWidth(),
@@ -53,12 +53,16 @@ fun MainScreen(
                 Icon(Icons.Outlined.Redo, "")
             }
 
-            IconButton(onClick = { }) {
-                Icon(Icons.Outlined.Create, "")
-            }
+            IconButton(onClick = {
+                if(viewModel.textChangeSinceLastSaveCount > 0) {
+                    Toast.makeText(context, context.getText(R.string.file_changed_warning_alt), Toast.LENGTH_LONG).show()
+                    return@IconButton
+                }
 
-            IconButton(onClick = { }) {
-                Icon(Icons.Outlined.DeleteOutline, "")
+                viewModel.onUriStateChanged()
+                viewModel.onTextFieldStateChanged("")
+            }) {
+                Icon(Icons.Outlined.Create, "")
             }
         }
         Box {
@@ -87,7 +91,6 @@ fun MainScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val context = LocalContext.current
                 val openFileLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) { it ->
 //                    val file = it?.let { it1 -> context.contentResolver.openInputStream(it1) }
                     viewModel.onUriStateChanged(it)
@@ -100,6 +103,7 @@ fun MainScreen(
                         }
                     }
                     viewModel.onTextFieldStateChanged(text)
+                    viewModel.resetTextChangeSinceLastSaveCount()
                 }
                 Button(onClick = {
                     openFileLauncher.launch(arrayOf("text/plain"))
@@ -110,6 +114,9 @@ fun MainScreen(
                     )
                 }
                 Button(onClick = {
+
+                    if(viewModel.textFieldState.isEmpty()) return@Button
+
                     if(viewModel.textChangeSinceLastSaveCount > 0) {
                         Toast.makeText(context, context.getText(R.string.file_changed_warning), Toast.LENGTH_LONG).show()
                         return@Button
@@ -126,6 +133,7 @@ fun MainScreen(
                 val saveFileLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.CreateDocument("text/plain")) {
                     val file = it?.let { it1 -> context.contentResolver.openOutputStream(it1) }
                     val text = viewModel.textFieldState
+                    viewModel.onUriStateChanged(it)
                     scope.launch {
                         withContext(Dispatchers.IO) {
                             file?.write(text.encodeToByteArray())
