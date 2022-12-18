@@ -45,11 +45,21 @@ fun MainScreen(
             drawerState = drawerState
         ) {
 
-            IconButton(onClick = { }) {
+            IconButton(
+                onClick = {
+                    viewModel.undo()
+                },
+                enabled = viewModel.textFieldState.isNotBlank()
+            ) {
                 Icon(Icons.Outlined.Undo, "")
             }
 
-            IconButton(onClick = { }) {
+            IconButton(
+                onClick = {
+                    viewModel.redo()
+                },
+                enabled = viewModel.redoStack.isNotEmpty()
+            ) {
                 Icon(Icons.Outlined.Redo, "")
             }
 
@@ -123,6 +133,7 @@ fun MainScreen(
                     }
 
                     viewModel.onUriStateChanged()
+                    viewModel.clearStacks()
                     viewModel.onTextFieldStateChanged("")
                 }) {
                     Text(
