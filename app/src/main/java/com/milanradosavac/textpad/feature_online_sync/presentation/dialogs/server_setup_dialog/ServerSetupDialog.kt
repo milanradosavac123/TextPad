@@ -1,11 +1,13 @@
-package com.milanradosavac.textpad.feature_text_editing.presentation.dialogs.server_setup_dialog
+package com.milanradosavac.textpad.feature_online_sync.presentation.dialogs.server_setup_dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,20 +18,20 @@ import com.milanradosavac.textpad.R
 
 /**
  * The dialog for setting up the server
- * @param showDialogState The state that determines if the dialog should be shown or not
- * @param serverUrlState The state that holds the server url string
+ * @param showDialog The state that determines if the dialog should be shown or not
+ * @param serverUrl The state that holds the server url string
  * @param onShowDialogChanged The callback that handles showDialogState changes
  * @param onServerUrlTextChanged The callback that handles serverUrlState changes
  * @author Milan Radosavac
  */
 @Composable
 fun OnlineSyncServerSetupDialog(
-    showDialogState: State<Boolean>,
-    serverUrlState: State<String>,
+    showDialog: Boolean,
+    serverUrl: String,
     onShowDialogChanged: (it: Boolean) -> Unit,
     onServerUrlTextChanged: (it: String) -> Unit
 ) {
-    if(showDialogState.value) {
+    if(showDialog) {
         Dialog(onDismissRequest = { onShowDialogChanged(false) }) {
             Column(
                 Modifier
@@ -42,7 +44,7 @@ fun OnlineSyncServerSetupDialog(
             ) {
 
                 OutlinedTextField(
-                    value = serverUrlState.value,
+                    value = serverUrl,
                     onValueChange = onServerUrlTextChanged,
                     textStyle = MaterialTheme.typography.body1, label = {
                         Text(text = stringResource(id = R.string.enter_url), style = MaterialTheme.typography.body1)

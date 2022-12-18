@@ -10,7 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.milanradosavac.textpad.feature_text_editing.presentation.util.Navigation
+import com.milanradosavac.textpad.core.util.Navigation
 import com.milanradosavac.textpad.ui.theme.TextPadTheme
 
 /**

@@ -4,7 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.milanradosavac.textpad.feature_text_editing.presentation.util.Constants.DEBUG_TAG
+import com.milanradosavac.textpad.core.util.Constants.DEBUG_TAG
 import java.util.Stack
 
 /**

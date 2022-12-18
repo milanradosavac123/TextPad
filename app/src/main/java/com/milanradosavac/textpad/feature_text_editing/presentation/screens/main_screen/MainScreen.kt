@@ -101,8 +101,7 @@ fun MainScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val openFileLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) { it ->
-//                    val file = it?.let { it1 -> context.contentResolver.openInputStream(it1) }
+                val openFileLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) {
                     viewModel.onUriStateChanged(it)
                     val file = context.contentResolver.openInputStream(viewModel.uriState?: return@rememberLauncherForActivityResult)
                     val text = file?.readBytes()?.decodeToString() ?: "error"

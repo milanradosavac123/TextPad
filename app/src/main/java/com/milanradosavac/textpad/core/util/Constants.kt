@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.feature_text_editing.presentation.util
+package com.milanradosavac.textpad.core.util
 
 /**
  * The constant definition object
@@ -24,4 +24,10 @@ object Constants {
      * @author Milan Radosavac
      */
     const val URL_TAG = "url"
+
+    /**
+     * The server url shared preferences key
+     * @author Milan Radosavac
+     */
+    const val SERVER_URL_KEY = "server_url"
 }

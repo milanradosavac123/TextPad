@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.milanradosavac.textpad.R
 import com.milanradosavac.textpad.feature_text_editing.presentation.components.StandardAppBar
-import com.milanradosavac.textpad.feature_text_editing.presentation.util.Constants.EMAIL_TAG
+import com.milanradosavac.textpad.core.util.Constants.EMAIL_TAG
 import kotlinx.coroutines.CoroutineScope
 
 /**

@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.feature_text_editing.presentation.util
+package com.milanradosavac.textpad.core.util
 
 /**
  * The class that defines what info each [Screen] is supposed to have

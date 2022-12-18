@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.feature_text_editing.presentation.util
+package com.milanradosavac.textpad.core.util
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen.OnlineSyncViewModel
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.online_sync_management_screen.OnlineSyncManagementScreen
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.main_screen.MainScreen
 import com.milanradosavac.textpad.feature_text_editing.presentation.screens.about_screen.AboutScreen
@@ -95,7 +96,7 @@ fun Navigation(
 
             composable(Screen.MainScreen()) { MainScreen(scope, drawerState, get(MainViewModel::class.java)) }
 
-            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen(scope, drawerState) }
+            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen(scope, drawerState, get(OnlineSyncViewModel::class.java)) }
 
             composable(Screen.AboutScreen()) { AboutScreen(scope, drawerState) }
 
