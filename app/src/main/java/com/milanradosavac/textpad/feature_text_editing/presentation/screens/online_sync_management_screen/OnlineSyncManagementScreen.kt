@@ -1,10 +1,15 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation.screens.online_sync_management_screen
 
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.RemoveCircleOutline
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.milanradosavac.textpad.R
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen.FileListScreen
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen.OnlineSyncViewModel
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.server_setup_instructions_screen.ServerSetupInstructionsScreen
@@ -27,12 +32,23 @@ fun OnlineSyncManagementScreen(
     viewModel: OnlineSyncViewModel
 ) {
     val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
+    val context = LocalContext.current
     Column {
-        StandardAppBar(modifier = Modifier.fillMaxWidth(), scope = scope, drawerState = drawerState)
+        StandardAppBar(modifier = Modifier.fillMaxWidth(), scope = scope, drawerState = drawerState) {
+            IconButton(
+                onClick = {
+                    sharedPreferences.edit().remove(SERVER_URL_KEY).apply()
+                    Toast.makeText(context, context.getString(R.string.server_url_removed_notice), Toast.LENGTH_LONG).show()
+                },
+                enabled = !sharedPreferences.getString(SERVER_URL_KEY, "").isNullOrBlank()
+            ) {
+                Icon(Icons.Outlined.RemoveCircleOutline, contentDescription = "")
+            }
+        }
 
-        val serverLink = sharedPreferences.getString(SERVER_URL_KEY, "") ?: ""
+        val serverLink = sharedPreferences.getString(SERVER_URL_KEY, "")
 
-        if (serverLink.isBlank()) {
+        if (serverLink.isNullOrBlank()) {
             ServerSetupInstructionsScreen(viewModel)
             return@Column
         }

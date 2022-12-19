@@ -28,4 +28,5 @@
     <string name="file_changed_warning">Fajl je promjenut nakon poslijednjeg čuvanja! Sačuvajte fajl prije zatvaranja istog.</string>
     <string name="file_changed_warning_alt">Fajl je promjenut nakon poslijednjeg čuvanja! Sačuvajte fajl prije kreiranja novog.</string>
     <string name="server_url_saved_notice">Link servera je sačuvan. Ponovo pokrenite aplikaciju da biste počeli sinhronizovati vaše fajlove.</string>
+    <string name="server_url_removed_notice">Link servera je izbrisan. Pokrenite aplikaciju ponovo da bi potvrdili promjenu.</string>
 </resources>
