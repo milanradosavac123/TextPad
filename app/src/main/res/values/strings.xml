@@ -25,7 +25,7 @@
     <string name="add_server">dodaj server</string>
     <string name="enter_url">Unesite link servera</string>
     <string name="default_file_name">dokument.txt</string>
-    <string name="file_changed_warning">Fajl je promjenut nakon posljednjeg cuvanja! Sacuvajte fajl prije zatvaranja istog.</string>
-    <string name="file_changed_warning_alt">Fajl je promjenut nakon posljednjeg cuvanja! Sacuvajte fajl prije kreiranja novog.</string>
-    <string name="server_url_saved_notice">Link servera je sacuvan. Ponovo pokrenite aplikaciju da biste poceli sinhronizovati vase fajlove.</string>
+    <string name="file_changed_warning">Fajl je promjenut nakon poslijednjeg čuvanja! Sačuvajte fajl prije zatvaranja istog.</string>
+    <string name="file_changed_warning_alt">Fajl je promjenut nakon poslijednjeg čuvanja! Sačuvajte fajl prije kreiranja novog.</string>
+    <string name="server_url_saved_notice">Link servera je sačuvan. Ponovo pokrenite aplikaciju da biste počeli sinhronizovati vaše fajlove.</string>
 </resources>
