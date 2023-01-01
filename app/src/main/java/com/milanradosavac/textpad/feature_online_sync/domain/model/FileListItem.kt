@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.feature_text_editing.domain.model
+package com.milanradosavac.textpad.feature_online_sync.domain.model
 
 import java.io.File
 import kotlin.reflect.KProperty

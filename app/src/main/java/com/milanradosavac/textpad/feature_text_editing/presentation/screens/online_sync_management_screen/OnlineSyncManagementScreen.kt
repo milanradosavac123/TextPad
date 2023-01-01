@@ -37,8 +37,9 @@ fun OnlineSyncManagementScreen(
         StandardAppBar(modifier = Modifier.fillMaxWidth(), scope = scope, drawerState = drawerState) {
             IconButton(
                 onClick = {
-                    sharedPreferences.edit().remove(SERVER_URL_KEY).apply()
+                    viewModel.removeDevice()
                     Toast.makeText(context, context.getString(R.string.server_url_removed_notice), Toast.LENGTH_LONG).show()
+                    viewModel.removeServerUrl()
                 },
                 enabled = !sharedPreferences.getString(SERVER_URL_KEY, "").isNullOrBlank()
             ) {

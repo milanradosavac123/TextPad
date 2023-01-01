@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -101,4 +102,12 @@ dependencies {
 
     // Shared preferences
     implementation "androidx.preference:preference-ktx:1.2.0"
+
+    // Ktor client
+    implementation "io.ktor:ktor-client-core:$ktor_version"
+    implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.ktor:ktor-client-logging:$ktor_version"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
 }

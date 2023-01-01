@@ -6,15 +6,28 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.milanradosavac.textpad.core.util.Constants.DEVICE_ID_KEY
 import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
-import com.milanradosavac.textpad.feature_text_editing.domain.model.FileListItem
+import com.milanradosavac.textpad.feature_online_sync.domain.model.Device
+import com.milanradosavac.textpad.feature_online_sync.domain.model.FileListItem
+import com.milanradosavac.textpad.feature_online_sync.domain.remote.services.DeviceService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
+import java.util.UUID
 
 /**
  * The [OnlineSyncViewModel] for the online sync screens
  * @author Milan Radosavac
  */
 class OnlineSyncViewModel: ViewModel() {
+
+    /**
+     * Device service used to make the device network requests
+     * @author MaskedRedstonerProZ
+     */
+    private val deviceService: DeviceService by inject(DeviceService::class.java)
 
     /**
      * Shared preferences object used to store data like the server url
@@ -48,6 +61,40 @@ class OnlineSyncViewModel: ViewModel() {
      */
     fun saveServerUrl() {
         sharedPreferences.edit().putString(SERVER_URL_KEY, serverUrlState).apply()
+    }
+
+    /**
+     * Remove server url event handler
+     * @author MaskedRedstonerProZ
+     */
+    fun removeServerUrl() {
+        sharedPreferences.edit().remove(SERVER_URL_KEY).apply()
+    }
+
+    /**
+     * The add device event handler
+     * @author Milan Radosavac
+     */
+    fun addDevice() {
+        viewModelScope.launch(Dispatchers.IO) {
+            deviceService.addDevice(
+                Device(
+                    UUID.randomUUID().toString()
+                )
+            )
+        }
+    }
+
+    /**
+     * The remove device event handler
+     * @author Milan Radosavac
+     */
+    fun removeDevice() {
+        viewModelScope.launch {
+            deviceService.removeDevice(
+                sharedPreferences.getString(DEVICE_ID_KEY, "error") ?: "error"
+            )
+        }
     }
 
     /**
