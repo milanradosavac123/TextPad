@@ -1,12 +1,14 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation.screens.online_sync_management_screen
 
-import android.content.SharedPreferences
 import android.widget.Toast
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.DrawerState
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.RemoveCircleOutline
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.milanradosavac.textpad.R
@@ -14,9 +16,7 @@ import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen.OnlineSyncViewModel
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.server_setup_instructions_screen.ServerSetupInstructionsScreen
 import com.milanradosavac.textpad.feature_text_editing.presentation.components.StandardAppBar
-import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
 import kotlinx.coroutines.CoroutineScope
-import org.koin.java.KoinJavaComponent.inject
 
 /**
  * The screen that contains the online sync management functionality
@@ -31,7 +31,6 @@ fun OnlineSyncManagementScreen(
     drawerState: DrawerState,
     viewModel: OnlineSyncViewModel
 ) {
-    val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
     val context = LocalContext.current
     Column {
         StandardAppBar(modifier = Modifier.fillMaxWidth(), scope = scope, drawerState = drawerState) {
@@ -39,17 +38,16 @@ fun OnlineSyncManagementScreen(
                 onClick = {
                     viewModel.removeDevice()
                     Toast.makeText(context, context.getString(R.string.server_url_removed_notice), Toast.LENGTH_LONG).show()
+                    viewModel.onServerUrlStateChanged("")
                     viewModel.removeServerUrl()
                 },
-                enabled = !sharedPreferences.getString(SERVER_URL_KEY, "").isNullOrBlank()
+                enabled = !viewModel.serverUrlState.isNullOrBlank()
             ) {
                 Icon(Icons.Outlined.RemoveCircleOutline, contentDescription = "")
             }
         }
 
-        val serverLink = sharedPreferences.getString(SERVER_URL_KEY, "")
-
-        if (serverLink.isNullOrBlank()) {
+        if (viewModel.serverUrlState.isNullOrBlank()) {
             ServerSetupInstructionsScreen(viewModel)
             return@Column
         }

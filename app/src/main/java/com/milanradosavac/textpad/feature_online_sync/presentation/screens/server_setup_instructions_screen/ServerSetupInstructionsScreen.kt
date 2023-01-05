@@ -91,7 +91,7 @@ fun ServerSetupInstructionsScreen(
         val context = LocalContext.current
         OnlineSyncServerSetupDialog(
             showDialog = viewModel.dialogState,
-            serverUrl = viewModel.serverUrlState,
+            serverUrl = viewModel.serverUrlTextState,
             onShowDialogChanged = {
                 viewModel.onDialogStateChanged(it)
                 viewModel.saveServerUrl()
@@ -99,7 +99,7 @@ fun ServerSetupInstructionsScreen(
                 viewModel.addDevice()
             }
         ) {
-            viewModel.onServerUrlStateChanged(it)
+            viewModel.onServerUrlTextStateChanged(it)
         }
     }
 }

@@ -52,15 +52,21 @@ class OnlineSyncViewModel: ViewModel() {
      * The state object that holds the server url text state
      * @author Milan Radosavac
      */
-    var serverUrlState by mutableStateOf("")
+    var serverUrlTextState by mutableStateOf("")
         private set
 
+    /**
+     * The state object that holds the server url state
+     * @author Milan Radosavac
+     */
+    var serverUrlState by mutableStateOf(sharedPreferences.getString(SERVER_URL_KEY, ""))
+        private set
     /**
      * Save server url event handler
      * @author Milan Radosavac
      */
     fun saveServerUrl() {
-        sharedPreferences.edit().putString(SERVER_URL_KEY, serverUrlState).apply()
+        sharedPreferences.edit().putString(SERVER_URL_KEY, serverUrlTextState).apply()
     }
 
     /**
@@ -82,6 +88,8 @@ class OnlineSyncViewModel: ViewModel() {
                     UUID.randomUUID().toString()
                 )
             )
+        }.invokeOnCompletion {
+            onServerUrlStateChanged(sharedPreferences.getString(SERVER_URL_KEY, ""))
         }
     }
 
@@ -98,11 +106,19 @@ class OnlineSyncViewModel: ViewModel() {
     }
 
     /**
+     * Public-friendly server url state setter
+     * @author Milan Radosavac
+     */
+    fun onServerUrlStateChanged(it: String?) {
+        serverUrlState = it
+    }
+
+    /**
      * Public-friendly server url text state setter
      * @author Milan Radosavac
      */
-    fun onServerUrlStateChanged(it: String) {
-        serverUrlState = it
+    fun onServerUrlTextStateChanged(it: String) {
+        serverUrlTextState = it
     }
 
     /**
