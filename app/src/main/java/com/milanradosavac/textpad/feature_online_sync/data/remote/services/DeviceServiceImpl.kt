@@ -3,12 +3,11 @@ package com.milanradosavac.textpad.feature_online_sync.data.remote.services
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
-import com.milanradosavac.textpad.core.util.Constants
 import com.milanradosavac.textpad.core.util.Constants.DEBUG_TAG
 import com.milanradosavac.textpad.core.util.Constants.DEVICE_ID_KEY
-import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
 import com.milanradosavac.textpad.core.util.Constants.HttpRoutes.ROUTE_DEVICE_ADD
 import com.milanradosavac.textpad.core.util.Constants.HttpRoutes.ROUTE_DEVICE_REMOVE
+import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
 import com.milanradosavac.textpad.feature_online_sync.domain.model.Device
 import com.milanradosavac.textpad.feature_online_sync.domain.model.requests.DeviceAddOrRemoveRequest
 import com.milanradosavac.textpad.feature_online_sync.domain.remote.services.DeviceService
@@ -31,7 +30,7 @@ class DeviceServiceImpl(
             putString(DEVICE_ID_KEY, device.deviceId)
         }
         try {
-            client.post<DeviceAddOrRemoveRequest> {
+            client.post<Unit> {
                 url("$BASE_URL$ROUTE_DEVICE_ADD")
                 contentType(ContentType.Application.Json)
                 body = DeviceAddOrRemoveRequest(
@@ -44,15 +43,14 @@ class DeviceServiceImpl(
             Log.d("$DEBUG_TAG: Server Exception2","Error: ${e.response.status.description}")
         } catch(e: ServerResponseException) {
             Log.d("$DEBUG_TAG: Server Exception3","Error: ${e.response.status.description}")
+        } catch(e: Exception) {
+            Log.d("$DEBUG_TAG: Server Exception4","Error: ${e.stackTrace.asList()}")
         }
-//        catch(e: Exception) {
-//            Log.d("$DEBUG_TAG: Server Exception4","Error: ${e.stackTrace.asList()}")
-//        }
     }
 
     override suspend fun removeDevice(deviceId: String) {
         try {
-            client.delete<DeviceAddOrRemoveRequest> {
+            client.delete<Unit> {
                 url("$BASE_URL$ROUTE_DEVICE_REMOVE")
                 contentType(ContentType.Application.Json)
                 body = DeviceAddOrRemoveRequest(
