@@ -34,6 +34,7 @@ import org.koin.java.KoinJavaComponent.get
  * The navigation drawer
  * @param navController The navigation controller
  * @param drawerState The navigation drawer state
+ * @param activity The root activity of all the screens
  * @author Milan Radosavac
  */
 @Composable

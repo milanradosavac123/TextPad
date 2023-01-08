@@ -26,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
  * @param scope The coroutine scope for this screen
  * @param drawerState The drawer state for the navigation drawer
  * @param viewModel The viewmodel for this screen
+ * @param activity The root activity of all the screens
  * @author Milan Radosavac
  */
 @Composable

@@ -81,6 +81,20 @@ class FileRepositoryImpl(
         dao.saveFile(fileDto)
     }
 
+    override suspend fun loadFiles(): List<FileListItem> {
+
+        val files = dao.loadFiles()
+
+        return files.map {
+            FileListItem(
+                file = File(it.path),
+                isSynced = true,
+                deviceOfOrigin = it.deviceOfOrigin,
+                id = it.id
+            )
+        }
+    }
+
     override suspend fun updateFile(fileListItem: FileListItem) {
 
         val fileDto = fileListItem.mapToDto()

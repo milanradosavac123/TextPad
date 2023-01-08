@@ -1,12 +1,10 @@
 package com.milanradosavac.textpad.feature_online_sync.presentation.screens.server_setup_instructions_screen
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -86,6 +84,11 @@ fun ServerSetupInstructionsScreen(
                 text = stringResource(id = R.string.add_server),
                 style = MaterialTheme.typography.body1
             )
+        }
+
+        if(viewModel.deviceAddingProgressState) {
+            Spacer(modifier = Modifier.height(10.dp))
+            CircularProgressIndicator()
         }
 
         val context = LocalContext.current

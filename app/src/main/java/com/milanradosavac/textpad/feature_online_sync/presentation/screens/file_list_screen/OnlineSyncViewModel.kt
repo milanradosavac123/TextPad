@@ -3,14 +3,10 @@ package com.milanradosavac.textpad.feature_online_sync.presentation.screens.file
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Environment
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.milanradosavac.textpad.core.util.Constants
 import com.milanradosavac.textpad.core.util.Constants.DEVICE_ID_KEY
 import com.milanradosavac.textpad.core.util.Constants.READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY
 import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
@@ -82,6 +78,54 @@ class OnlineSyncViewModel : ViewModel() {
         private set
 
     /**
+     * The state object that holds the state that determines
+     * if the device adding progress indicator should be visible
+     * @author Milan Radosavac
+     */
+    var deviceAddingProgressState by mutableStateOf(false)
+        private set
+
+    /**
+     * The state object that holds the state that determines
+     * if the file adding progress indicator(s) should be visible
+     * @author Milan Radosavac
+     */
+    var fileAddingProgressState = mutableStateListOf<Boolean>()
+        private set
+
+    /**
+     * The state object that holds the state that determines
+     * if the file loading progress from the local database indicator should be visible
+     * @author Milan Radosavac
+     */
+    var localDatabaseFileLoadingProgressState by mutableStateOf(false)
+        private set
+
+    /**
+     * Public-friendly local database file loading progress state setter
+     * @author Milan Radosavac
+     */
+    fun onLocalDatabaseFileLoadingProgressStateChanged(value: Boolean) {
+        localDatabaseFileLoadingProgressState = value
+    }
+
+    /**
+     * Public-friendly local database file adding progress state setter
+     * @author Milan Radosavac
+     */
+    fun onFileAddingProgressStateChanged(changeIndex: Int, value: Boolean) {
+         fileAddingProgressState[changeIndex] = value
+    }
+
+    /**
+     * Public-friendly device adding progress state setter
+     * @author Milan Radosavac
+     */
+    fun onDeviceAddingProgressStateChanged(value: Boolean) {
+        deviceAddingProgressState = value;
+    }
+
+    /**
      * Fetches a list of all text files on the user's device(in the documents and downloads folder(directly, no subfolders supported))
      * @author Milan Radosavac
      */
@@ -96,6 +140,7 @@ class OnlineSyncViewModel : ViewModel() {
                         FileListItem(file, id = "", deviceOfOrigin = sharedPreferences.getString(
                             DEVICE_ID_KEY, "")?: "")
                     )
+                    fileAddingProgressState.add(false)
                 }
             }
         }
@@ -108,6 +153,7 @@ class OnlineSyncViewModel : ViewModel() {
      */
     fun addFile(fileIndex: Int) {
         val file = fileState[fileIndex].file
+        onFileAddingProgressStateChanged(fileIndex, true)
         viewModelScope.launch(Dispatchers.IO) {
             val response = fileRepository.addFile(
                 AddFileRequest(
@@ -121,6 +167,26 @@ class OnlineSyncViewModel : ViewModel() {
             )
 
             fileRepository.addFile(fileState[fileIndex])
+        }.invokeOnCompletion {
+            onFileAddingProgressStateChanged(fileIndex, false)
+        }
+    }
+
+    /**
+     * Fetches the file info from the local database
+     * @author Milan Radosavac
+     */
+    fun loadFilesFromLocalDatabase() {
+        onLocalDatabaseFileLoadingProgressStateChanged(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            fileRepository.loadFiles().forEachIndexed { i, item ->
+                fileState[i] = fileState[i].copy(
+                    isSynced = item.isSynced,
+                    id = item.id
+                )
+            }
+        }.invokeOnCompletion {
+            onLocalDatabaseFileLoadingProgressStateChanged(false)
         }
     }
 
@@ -146,12 +212,15 @@ class OnlineSyncViewModel : ViewModel() {
      */
     fun addDevice() {
         viewModelScope.launch(Dispatchers.IO) {
+            onDeviceAddingProgressStateChanged(true)
             deviceRepository.addDevice(
                 Device(
                     UUID.randomUUID().toString()
                 )
             )
+        }.invokeOnCompletion {
             onServerUrlStateChanged(sharedPreferences.getString(SERVER_URL_KEY, ""))
+            onDeviceAddingProgressStateChanged(false)
         }
     }
 

@@ -22,13 +22,13 @@
         da bi preuzeli server softver za željeni racunar. Tamo ćete naći i kako da nastavite zavisno od toga da li server softver instalirate na Linux-os
         ili Windows računar.
     </string>
-    <string name="add_server">dodaj server</string>
+    <string name="add_server">dodajte server</string>
     <string name="enter_url">Unesite link servera</string>
     <string name="default_file_name">dokument.txt</string>
     <string name="file_changed_warning">Fajl je promjenut nakon poslijednjeg čuvanja! Sačuvajte fajl prije zatvaranja istog.</string>
     <string name="file_changed_warning_alt">Fajl je promjenut nakon poslijednjeg čuvanja! Sačuvajte fajl prije kreiranja novog.</string>
-    <string name="server_url_saved_notice">Link servera je sačuvan. Ponovo pokrenite aplikaciju da biste počeli sinhronizovati vaše fajlove.</string>
-    <string name="server_url_removed_notice">Link servera je izbrisan. Pokrenite aplikaciju ponovo da bi potvrdili promjenu.</string>
+    <string name="server_url_saved_notice">Link servera je sačuvan.</string>
+    <string name="server_url_removed_notice">Link servera je izbrisan.</string>
     <string name="permission_permanently_denied">Potrebna dozvola je odbijena do daljnjeg. Ako hocete da vam Onlajn Sinhronizacija funkcionise, moracete otici u podesavanja vaseg uredjaja i odatle izdati ovu dozvolu aplikaciji.</string>
     <string name="permission_rationale_title">Potrebna dozvola</string>
     <string name="permission_rationale_message">Dozvola za pristup fajlovima na memoriji uredjaja je potreba da bi aplikacija mogla da objavljuje iste na server za Onlajn sinhronizaciju</string>

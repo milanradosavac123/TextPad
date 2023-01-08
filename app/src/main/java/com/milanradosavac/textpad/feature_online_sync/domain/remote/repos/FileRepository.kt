@@ -29,6 +29,12 @@ interface FileRepository {
     suspend fun addFile(fileListItem: FileListItem)
 
     /**
+     * Loads the files from the local database
+     * @author Milan Radosavac
+     */
+    suspend fun loadFiles(): List<FileListItem>
+
+    /**
      * Removes the file from the remote sync api
      * @author Milan Radosavac
      */

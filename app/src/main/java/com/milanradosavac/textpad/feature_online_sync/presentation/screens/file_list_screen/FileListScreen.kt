@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,12 +36,12 @@ import androidx.core.app.ComponentActivity
 import androidx.core.content.edit
 import com.milanradosavac.textpad.core.util.Constants.READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY
 import com.milanradosavac.textpad.core.util.sdk30AndUp
-import org.koin.core.qualifier.named
 import com.milanradosavac.textpad.R as r
 
 /**
  * The local file list screen
  * @param viewModel The viewmodel for this screen
+ * @param activity The root activity of all the screens
  * @author Milan Radosavac
  */
 @Composable
@@ -50,6 +51,7 @@ fun FileListScreen(
 ) {
     lateinit var permissionRequestLauncher: ManagedActivityResultLauncher<String, Boolean>
     val context = LocalContext.current
+
     val alertDialog = AlertDialog.Builder(context).apply {
         setTitle(r.string.permission_rationale_title)
         setMessage(r.string.permission_rationale_message)
@@ -57,10 +59,13 @@ fun FileListScreen(
             permissionRequestLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }.create()
+
     val managePermissionLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             viewModel.listTextFiles()
+            viewModel.loadFilesFromLocalDatabase()
         }
+
     val permissionPermanentlyDeniedInfo = stringResource(id = r.string.permission_permanently_denied)
     permissionRequestLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -71,6 +76,7 @@ fun FileListScreen(
             }
             if (it) {
                 viewModel.listTextFiles()
+                viewModel.loadFilesFromLocalDatabase()
                 return@rememberLauncherForActivityResult
             }
 
@@ -95,20 +101,23 @@ fun FileListScreen(
     } ?: SideEffect {
         permissionRequestLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
+
     sdk30AndUp {
         if (Environment.isExternalStorageManager()) {
             remember {
                 viewModel.listTextFiles()
+                viewModel.loadFilesFromLocalDatabase()
                 null
             }
         }
-    }
-        ?: if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            remember {
-                viewModel.listTextFiles()
-                null
-            }
-        } else Unit
+    } ?: if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        remember {
+            viewModel.listTextFiles()
+            viewModel.loadFilesFromLocalDatabase()
+            null
+        }
+    } else Unit
+
     Column(
         Modifier
             .padding(15.dp)
@@ -116,6 +125,11 @@ fun FileListScreen(
     ) {
 
         LazyColumn(Modifier.clip(MaterialTheme.shapes.medium)) {
+            if(viewModel.localDatabaseFileLoadingProgressState) {
+                item {
+                    CircularProgressIndicator()
+                }
+            }
             items(
                 items = viewModel.fileState.toList().distinct(),
                 itemContent = { item ->
@@ -134,6 +148,11 @@ fun FileListScreen(
                                 color = MaterialTheme.colors.primaryVariant,
                                 modifier = Modifier.weight(1F)
                             )
+                            if(viewModel.fileAddingProgressState[viewModel.fileState.indexOf(item)]) {
+                                CircularProgressIndicator(
+                                    color = MaterialTheme.colors.primaryVariant
+                                )
+                            }
                             Checkbox(checked = item.isSynced, onCheckedChange = {
                                 if (it) {
                                     viewModel.addFile(viewModel.fileState.indexOf(item))
