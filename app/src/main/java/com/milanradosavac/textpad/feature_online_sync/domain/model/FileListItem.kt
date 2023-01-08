@@ -7,6 +7,8 @@ import kotlin.reflect.KProperty
  * Class that describes an item in the list of files on the user's device
  * @param file The actual file
  * @param isSynced If that file is synced or not
+ * @param deviceOfOrigin The id of the [Device] the file came from
+ * @param id The id of the file in the actual database
  * @author Milan Radosavac
  */
 data class FileListItem(
@@ -14,6 +16,4 @@ data class FileListItem(
     val isSynced: Boolean = false,
     val deviceOfOrigin: String,
     val id: String
-) {
-    operator fun getValue(nothing: Nothing?, property: KProperty<*>): FileListItem = this
-}
+)

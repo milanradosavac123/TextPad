@@ -9,6 +9,7 @@ import com.milanradosavac.textpad.feature_online_sync.data.db.FileDao
 import com.milanradosavac.textpad.feature_online_sync.domain.model.FileListItem
 import com.milanradosavac.textpad.feature_online_sync.domain.model.requests.AddFileRequest
 import com.milanradosavac.textpad.feature_online_sync.domain.model.responses.AddFileResponse
+import com.milanradosavac.textpad.feature_online_sync.domain.remote.repos.DeviceRepository
 import com.milanradosavac.textpad.feature_online_sync.domain.remote.repos.FileRepository
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -20,13 +21,27 @@ import kotlinx.serialization.json.Json
 import org.koin.java.KoinJavaComponent
 import java.io.File
 
+/**
+ * [FileRepository] implementation to interact with the remote sync api
+ * @param client The http client for the actual api interactions
+ * @param dao The database access object for interacting with the local database
+ * @author Milan Radosavac
+ */
 class FileRepositoryImpl(
     private val client: HttpClient,
     private val dao: FileDao
 ) : FileRepository {
 
+    /**
+     * Shared preferences object used to store data like the server url
+     * @author Milan Radosavac
+     */
     private val sharedPreferences: SharedPreferences by KoinJavaComponent.inject(SharedPreferences::class.java)
 
+    /**
+     * Base url for the api
+     * @author Milan Radosavac
+     */
     private val BASE_URL = sharedPreferences.getString(Constants.SERVER_URL_KEY, "error") ?: "error"
 
     override suspend fun addFile(fileRequest: AddFileRequest, file: File): AddFileResponse? {

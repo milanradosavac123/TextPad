@@ -49,16 +49,40 @@ object Constants {
      */
     object HttpRoutes {
 
+        /**
+         * The device adding route constant
+         * @author Milan Radosavac
+         */
         const val ROUTE_DEVICE_ADD = "/api/device/add"
 
+        /**
+         * The device removing route constant
+         * @author Milan Radosavac
+         */
         const val ROUTE_DEVICE_REMOVE = "/api/device/remove"
 
+        /**
+         * The file adding route constant
+         * @author Milan Radosavac
+         */
         const val ROUTE_FILE_ADD = "/api/file/add"
 
+        /**
+         * The file removing route constant
+         * @author Milan Radosavac
+         */
         const val ROUTE_FIlE_REMOVE = "/api/file/remove"
 
+        /**
+         * The file sync starting route constant
+         * @author Milan Radosavac
+         */
         const val ROUTE_FIlE_SYNC_START = "/api/file/sync/start"
 
+        /**
+         * The file sync route constant
+         * @author Milan Radosavac
+         */
         const val ROUTE_FIlE_SYNC = "/api/file/sync"
 
     }

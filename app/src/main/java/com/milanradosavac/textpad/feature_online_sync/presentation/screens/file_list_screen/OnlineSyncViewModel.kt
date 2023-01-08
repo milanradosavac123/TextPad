@@ -78,6 +78,10 @@ class OnlineSyncViewModel : ViewModel() {
     var serverUrlState by mutableStateOf(sharedPreferences.getString(SERVER_URL_KEY, ""))
         private set
 
+    /**
+     * Fetches a list of all text files on the user's device(in the documents and downloads folder(directly, no subfolders supported))
+     * @author Milan Radosavac
+     */
     fun listTextFiles() {
         Environment.getExternalStorageDirectory().listFiles()?.forEach externalFilesList@ {
             if(it.name == "Documents" || it.name == "Download") {
@@ -91,6 +95,11 @@ class OnlineSyncViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Adds the chosen file to the local database as well as the remote sync api
+     * @param fileIndex The index of the chosen file to add
+     * @author Milan Radosavac
+     */
     fun addFile(fileIndex: Int) {
         val file = fileState[fileIndex].file
         viewModelScope.launch(Dispatchers.IO) {

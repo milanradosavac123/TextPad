@@ -23,6 +23,7 @@ import org.koin.dsl.module
  */
 val appModule = module {
 
+    // Room database dependency definition
     single {
         Room.databaseBuilder(
             androidContext(),
@@ -31,6 +32,7 @@ val appModule = module {
         ).build()
     }
 
+    // Room database access object dependency definition
     single {
         val database: FileDatabase = get(FileDatabase::class)
         database.dao

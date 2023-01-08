@@ -17,12 +17,25 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import org.koin.java.KoinJavaComponent.inject
 
+/**
+ * [DeviceRepository] implementation to interact with the remote sync api
+ * @param client The http client for the actual api interactions
+ * @author Milan Radosavac
+ */
 class DeviceRepositoryImpl(
     private val client: HttpClient
 ): DeviceRepository {
 
+    /**
+     * Shared preferences object used to store data like the server url
+     * @author Milan Radosavac
+     */
     private val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
 
+    /**
+     * Base url for the api
+     * @author Milan Radosavac
+     */
     private val BASE_URL = sharedPreferences.getString(SERVER_URL_KEY, "error") ?: "error"
 
     override suspend fun addDevice(device: Device) {
