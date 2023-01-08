@@ -11,7 +11,9 @@ import kotlin.reflect.KProperty
  */
 data class FileListItem(
     val file: File,
-    val isSynced: Boolean = false
+    val isSynced: Boolean = false,
+    val deviceOfOrigin: String,
+    val id: String
 ) {
     operator fun getValue(nothing: Nothing?, property: KProperty<*>): FileListItem = this
 }

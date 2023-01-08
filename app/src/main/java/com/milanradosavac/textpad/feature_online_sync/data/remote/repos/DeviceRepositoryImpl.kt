@@ -1,4 +1,4 @@
-package com.milanradosavac.textpad.feature_online_sync.data.remote.services
+package com.milanradosavac.textpad.feature_online_sync.data.remote.repos
 
 import android.content.SharedPreferences
 import android.util.Log
@@ -10,16 +10,16 @@ import com.milanradosavac.textpad.core.util.Constants.HttpRoutes.ROUTE_DEVICE_RE
 import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
 import com.milanradosavac.textpad.feature_online_sync.domain.model.Device
 import com.milanradosavac.textpad.feature_online_sync.domain.model.requests.DeviceAddOrRemoveRequest
-import com.milanradosavac.textpad.feature_online_sync.domain.remote.services.DeviceService
+import com.milanradosavac.textpad.feature_online_sync.domain.remote.repos.DeviceRepository
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import org.koin.java.KoinJavaComponent.inject
 
-class DeviceServiceImpl(
+class DeviceRepositoryImpl(
     private val client: HttpClient
-): DeviceService {
+): DeviceRepository {
 
     private val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
 
@@ -64,7 +64,7 @@ class DeviceServiceImpl(
         } catch(e: ServerResponseException) {
             Log.d("$DEBUG_TAG: Server Exception3: ","Error: ${e.response.status.description}")
         } catch(e: Exception) {
-            Log.d("$DEBUG_TAG: Server Exception4: ","Error: ${e.message}")
+            Log.d("$DEBUG_TAG: Server Exception4: ","Error: ${e.stackTrace.asList()}")
         }
     }
 }

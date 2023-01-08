@@ -38,6 +38,12 @@ object Constants {
     const val DEVICE_ID_KEY = "device_id"
 
     /**
+     * The database name constant
+     * @author Milan Radosavac
+     */
+    const val DATABASE_NAME = "textpad-db"
+
+    /**
      * The http route constant definition object
      * @author Milan Radosavac
      */

@@ -97,6 +97,7 @@ fun ServerSetupInstructionsScreen(
                 viewModel.saveServerUrl()
                 Toast.makeText(context, context.getString(R.string.server_url_saved_notice), Toast.LENGTH_LONG).show()
                 viewModel.addDevice()
+                viewModel.onServerUrlTextStateChanged("")
             }
         ) {
             viewModel.onServerUrlTextStateChanged(it)
