@@ -38,6 +38,12 @@ object Constants {
     const val DEVICE_ID_KEY = "device_id"
 
     /**
+     * The read external storage permission request amount shared preferences key
+     * @author Milan Radosavac
+     */
+    const val READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY = "read_external_storage_permission_request_amount"
+
+    /**
      * The database name constant
      * @author Milan Radosavac
      */

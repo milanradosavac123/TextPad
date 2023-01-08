@@ -1,11 +1,17 @@
 package com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen
 
 import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Environment
 import android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+import android.widget.Toast
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,8 +28,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ComponentActivity
+import androidx.core.content.edit
+import com.milanradosavac.textpad.core.util.Constants.READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY
 import com.milanradosavac.textpad.core.util.sdk30AndUp
+import org.koin.core.qualifier.named
+import com.milanradosavac.textpad.R as r
 
 /**
  * The local file list screen
@@ -31,16 +44,47 @@ import com.milanradosavac.textpad.core.util.sdk30AndUp
  * @author Milan Radosavac
  */
 @Composable
-fun FileListScreen(viewModel: OnlineSyncViewModel) {
+fun FileListScreen(
+    viewModel: OnlineSyncViewModel,
+    activity: ComponentActivity
+) {
+    lateinit var permissionRequestLauncher: ManagedActivityResultLauncher<String, Boolean>
     val context = LocalContext.current
+    val alertDialog = AlertDialog.Builder(context).apply {
+        setTitle(r.string.permission_rationale_title)
+        setMessage(r.string.permission_rationale_message)
+        setPositiveButton("OK", ) { _, _ ->
+            permissionRequestLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }.create()
     val managePermissionLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             viewModel.listTextFiles()
         }
-    val permissionRequestLauncher =
+    val permissionPermanentlyDeniedInfo = stringResource(id = r.string.permission_permanently_denied)
+    permissionRequestLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-            viewModel.listTextFiles()
+            viewModel.sharedPreferences.edit {
+                putInt(READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY, viewModel.sharedPreferences.getInt(
+                    READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY, 0) + 1
+                )
+            }
+            if (it) {
+                viewModel.listTextFiles()
+                return@rememberLauncherForActivityResult
+            }
+
+            if(activity.shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
+                && viewModel.sharedPreferences.getInt(READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY, 0) > 1) {
+                alertDialog.show()
+                return@rememberLauncherForActivityResult
+            }
+
+            if(viewModel.sharedPreferences.getInt(READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY, 0) > 1) {
+                Toast.makeText(context, permissionPermanentlyDeniedInfo, Toast.LENGTH_LONG).show()
+            }
         }
+
     sdk30AndUp {
         val intent = Intent(ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
         SideEffect {
@@ -48,7 +92,9 @@ fun FileListScreen(viewModel: OnlineSyncViewModel) {
                 managePermissionLauncher.launch(intent)
             }
         }
-    } ?: permissionRequestLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+    } ?: SideEffect {
+        permissionRequestLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
     sdk30AndUp {
         if (Environment.isExternalStorageManager()) {
             remember {
@@ -56,12 +102,13 @@ fun FileListScreen(viewModel: OnlineSyncViewModel) {
                 null
             }
         }
-    }?: if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-        remember {
-            viewModel.listTextFiles()
-            null
-        }
-    } else Unit
+    }
+        ?: if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            remember {
+                viewModel.listTextFiles()
+                null
+            }
+        } else Unit
     Column(
         Modifier
             .padding(15.dp)
@@ -88,7 +135,7 @@ fun FileListScreen(viewModel: OnlineSyncViewModel) {
                                 modifier = Modifier.weight(1F)
                             )
                             Checkbox(checked = item.isSynced, onCheckedChange = {
-                                if(it) {
+                                if (it) {
                                     viewModel.addFile(viewModel.fileState.indexOf(item))
                                 }
                                 viewModel.fileState[viewModel.fileState.indexOf(item)] = item.copy(

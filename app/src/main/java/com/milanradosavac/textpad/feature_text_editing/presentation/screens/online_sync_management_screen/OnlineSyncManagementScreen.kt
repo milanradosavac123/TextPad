@@ -1,5 +1,6 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation.screens.online_sync_management_screen
 
+import android.app.Activity
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,8 @@ import androidx.compose.material.icons.outlined.RemoveCircleOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ComponentActivity
 import com.milanradosavac.textpad.R
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen.FileListScreen
 import com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen.OnlineSyncViewModel
@@ -29,7 +32,8 @@ import kotlinx.coroutines.CoroutineScope
 fun OnlineSyncManagementScreen(
     scope: CoroutineScope,
     drawerState: DrawerState,
-    viewModel: OnlineSyncViewModel
+    viewModel: OnlineSyncViewModel,
+    activity: ComponentActivity
 ) {
     val context = LocalContext.current
     Column {
@@ -52,6 +56,6 @@ fun OnlineSyncManagementScreen(
             return@Column
         }
 
-        FileListScreen(viewModel)
+        FileListScreen(viewModel, activity)
     }
 }

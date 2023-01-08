@@ -7,9 +7,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.milanradosavac.textpad.core.util.Constants
 import com.milanradosavac.textpad.core.util.Constants.DEVICE_ID_KEY
+import com.milanradosavac.textpad.core.util.Constants.READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY
 import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
 import com.milanradosavac.textpad.feature_online_sync.domain.model.Device
 import com.milanradosavac.textpad.feature_online_sync.domain.model.FileListItem
@@ -49,7 +52,7 @@ class OnlineSyncViewModel : ViewModel() {
      * Shared preferences object used to store data like the server url
      * @author Milan Radosavac
      */
-    private val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
+    val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
 
     /**
      * The state object that holds the file list state
@@ -83,6 +86,9 @@ class OnlineSyncViewModel : ViewModel() {
      * @author Milan Radosavac
      */
     fun listTextFiles() {
+        if(sharedPreferences.getInt(READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY, 0) > 0) sharedPreferences.edit {
+            putInt(READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY, 0)
+        }
         Environment.getExternalStorageDirectory().listFiles()?.forEach externalFilesList@ {
             if(it.name == "Documents" || it.name == "Download") {
                 it.listFiles { file -> file.extension == "txt" || file.extension == "TXT" }?.forEach { file ->

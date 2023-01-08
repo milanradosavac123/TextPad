@@ -27,7 +27,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Navigation(navController = rememberNavController(), drawerState = rememberDrawerState(initialValue = DrawerValue.Closed))
+                    Navigation(
+                        navController = rememberNavController(),
+                        drawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+                        activity = this
+                    )
                 }
             }
         }

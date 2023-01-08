@@ -1,5 +1,6 @@
 package com.milanradosavac.textpad.core.util
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ComponentActivity
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,7 +39,8 @@ import org.koin.java.KoinJavaComponent.get
 @Composable
 fun Navigation(
     navController: NavHostController,
-    drawerState: DrawerState
+    drawerState: DrawerState,
+    activity: ComponentActivity
 ) {
 
     val scope = rememberCoroutineScope()
@@ -51,7 +55,7 @@ fun Navigation(
                 Screen.MainScreen,
                 Screen.OnlineSyncManagementScreen,
                 Screen.AboutScreen
-            ).forEachIndexed { i: Int, it ->
+            ).forEach { it ->
 
                 Row(
                     Modifier
@@ -62,7 +66,6 @@ fun Navigation(
                         .clickable {
                             if (navController.currentDestination?.route != it()) {
                                 navController.apply {
-                                    popBackStack()
                                     navigate(it())
 
                                     scope.launch {
@@ -96,7 +99,7 @@ fun Navigation(
 
             composable(Screen.MainScreen()) { MainScreen(scope, drawerState, get(MainViewModel::class.java)) }
 
-            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen(scope, drawerState, get(OnlineSyncViewModel::class.java)) }
+            composable(Screen.OnlineSyncManagementScreen()) { OnlineSyncManagementScreen(scope, drawerState, get(OnlineSyncViewModel::class.java), activity) }
 
             composable(Screen.AboutScreen()) { AboutScreen(scope, drawerState) }
 
