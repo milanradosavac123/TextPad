@@ -1,6 +1,7 @@
 package com.milanradosavac.textpad.feature_text_editing.presentation
 
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize

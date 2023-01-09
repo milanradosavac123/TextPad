@@ -26,13 +26,6 @@ interface FileDao {
     fun saveFile(fileDto: FileDto)
 
     /**
-     * File updating in database handler
-     * @author Milan Radosavac
-     */
-    @RawQuery
-    fun updateFile(fileUpdateQuery: SupportSQLiteQuery): Boolean
-
-    /**
      * File deleting from database handler
      * @author Milan Radosavac
      */

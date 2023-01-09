@@ -13,6 +13,7 @@ import com.milanradosavac.textpad.core.util.Constants.SERVER_URL_KEY
 import com.milanradosavac.textpad.feature_online_sync.domain.model.Device
 import com.milanradosavac.textpad.feature_online_sync.domain.model.FileListItem
 import com.milanradosavac.textpad.feature_online_sync.domain.model.requests.AddFileRequest
+import com.milanradosavac.textpad.feature_online_sync.domain.model.requests.FileSyncRequest
 import com.milanradosavac.textpad.feature_online_sync.domain.remote.repos.DeviceRepository
 import com.milanradosavac.textpad.feature_online_sync.domain.remote.repos.FileRepository
 import kotlinx.coroutines.Dispatchers
@@ -87,10 +88,10 @@ class OnlineSyncViewModel : ViewModel() {
 
     /**
      * The state object that holds the state that determines
-     * if the file adding progress indicator(s) should be visible
+     * if the file adding/removing progress indicator(s) should be visible
      * @author Milan Radosavac
      */
-    var fileAddingProgressState = mutableStateListOf<Boolean>()
+    var fileAddingOrRemovingProgressState = mutableStateListOf<Boolean>()
         private set
 
     /**
@@ -110,11 +111,11 @@ class OnlineSyncViewModel : ViewModel() {
     }
 
     /**
-     * Public-friendly local database file adding progress state setter
+     * Public-friendly local database file adding/removing progress state setter
      * @author Milan Radosavac
      */
-    fun onFileAddingProgressStateChanged(changeIndex: Int, value: Boolean) {
-         fileAddingProgressState[changeIndex] = value
+    fun onFileAddingOrRemovingProgressStateChanged(changeIndex: Int, value: Boolean) {
+         fileAddingOrRemovingProgressState[changeIndex] = value
     }
 
     /**
@@ -140,7 +141,7 @@ class OnlineSyncViewModel : ViewModel() {
                         FileListItem(file, id = "", deviceOfOrigin = sharedPreferences.getString(
                             DEVICE_ID_KEY, "")?: "")
                     )
-                    fileAddingProgressState.add(false)
+                    fileAddingOrRemovingProgressState.add(false)
                 }
             }
         }
@@ -153,7 +154,7 @@ class OnlineSyncViewModel : ViewModel() {
      */
     fun addFile(fileIndex: Int) {
         val file = fileState[fileIndex].file
-        onFileAddingProgressStateChanged(fileIndex, true)
+        onFileAddingOrRemovingProgressStateChanged(fileIndex, true)
         viewModelScope.launch(Dispatchers.IO) {
             val response = fileRepository.addFile(
                 AddFileRequest(
@@ -168,10 +169,39 @@ class OnlineSyncViewModel : ViewModel() {
 
             fileRepository.addFile(fileState[fileIndex])
         }.invokeOnCompletion {
-            onFileAddingProgressStateChanged(fileIndex, false)
+            onFileAddingOrRemovingProgressStateChanged(fileIndex, false)
         }
     }
+    
+    fun removeFile(fileIndex: Int) {
+        onFileAddingOrRemovingProgressStateChanged(fileIndex, true)
+        val file = fileState[fileIndex]
+        val deviceId = sharedPreferences.getString(DEVICE_ID_KEY, "")?: ""
+        
+        if(file.deviceOfOrigin != deviceId) {
+            viewModelScope.launch(Dispatchers.IO) {
+                fileRepository.stopSynchronisingFile(
+                    FileSyncRequest(
+                        deviceId = deviceId,
+                        fileId = file.id
+                    )
+                )
 
+                fileRepository.removeFile(file.id)
+            }.invokeOnCompletion {
+                onFileAddingOrRemovingProgressStateChanged(fileIndex, false)
+            }
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            fileRepository.removeFile(file)
+            fileRepository.removeFile(file.id)
+        }.invokeOnCompletion {
+            onFileAddingOrRemovingProgressStateChanged(fileIndex, false)
+        }
+    }
+    
     /**
      * Fetches the file info from the local database
      * @author Milan Radosavac

@@ -86,6 +86,12 @@ object Constants {
         const val ROUTE_FIlE_SYNC_START = "/api/file/sync/start"
 
         /**
+         * The file sync stopping route constant
+         * @author Milan Radosavac
+         */
+        const val ROUTE_FIlE_SYNC_STOP = "/api/file/sync/start"
+
+        /**
          * The file sync route constant
          * @author Milan Radosavac
          */

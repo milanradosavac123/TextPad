@@ -165,7 +165,7 @@ fun MainScreen(
                         return@Button
                     }
 
-                    saveFileLauncher.launch(context.getString(R.string.default_file_name))
+                    saveFileLauncher.launch("")
                 }) {
                     Text(
                         text = stringResource(id = R.string.save),

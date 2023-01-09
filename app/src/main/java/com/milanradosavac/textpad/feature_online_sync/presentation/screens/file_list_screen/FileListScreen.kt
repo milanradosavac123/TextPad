@@ -1,7 +1,6 @@
 package com.milanradosavac.textpad.feature_online_sync.presentation.screens.file_list_screen
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,8 +9,6 @@ import android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
 import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.core.app.ComponentActivity
 import androidx.core.content.edit
 import com.milanradosavac.textpad.core.util.Constants.READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_AMOUNT_KEY
@@ -148,7 +144,7 @@ fun FileListScreen(
                                 color = MaterialTheme.colors.primaryVariant,
                                 modifier = Modifier.weight(1F)
                             )
-                            if(viewModel.fileAddingProgressState[viewModel.fileState.indexOf(item)]) {
+                            if(viewModel.fileAddingOrRemovingProgressState[viewModel.fileState.indexOf(item)]) {
                                 CircularProgressIndicator(
                                     color = MaterialTheme.colors.primaryVariant
                                 )
@@ -156,6 +152,9 @@ fun FileListScreen(
                             Checkbox(checked = item.isSynced, onCheckedChange = {
                                 if (it) {
                                     viewModel.addFile(viewModel.fileState.indexOf(item))
+                                }
+                                if(!it) {
+                                    viewModel.removeFile(viewModel.fileState.indexOf(item))
                                 }
                                 viewModel.fileState[viewModel.fileState.indexOf(item)] = item.copy(
                                     isSynced = it
